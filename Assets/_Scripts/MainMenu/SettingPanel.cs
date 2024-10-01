@@ -2,6 +2,7 @@ using DG.Tweening;
 using RingMaester;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class SettingPanel : PanelSystem.Panel
     [Header("References")]
     [SerializeField] Button closeBtn;
     [SerializeField] Button exitBGBtn;
+    [SerializeField] Button exportBtn;
     [SerializeField] Slider SFXSlider;
     [SerializeField] Slider MusicSlider;
     [SerializeField] Slider VibrationSlider;
@@ -26,6 +28,7 @@ public class SettingPanel : PanelSystem.Panel
     {
         exitBGBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.RemoveAllListeners();
+        exportBtn.onClick.RemoveAllListeners();
         GameDebug.Log("Values in settings is "+Settings.Instance.SFXMult+" "+Settings.Instance.MusicMult+" "+Settings.Instance.VibrationMult);
         PlayerPrefs.SetFloat("SFXMult",Settings.Instance.SFXMult);
         PlayerPrefs.SetFloat("MusicMult", Settings.Instance.MusicMult);
@@ -58,6 +61,9 @@ public class SettingPanel : PanelSystem.Panel
         {
             Settings.Instance.VibrationMult = value;
         });
+
+        exportBtn.onClick.RemoveAllListeners();
+        exportBtn.onClick.AddListener(ExportToJSON);
     }
 
     protected override void OnOpenStarted()
@@ -66,5 +72,37 @@ public class SettingPanel : PanelSystem.Panel
         SFXSlider.value = Settings.Instance.SFXMult;
         MusicSlider.value = Settings.Instance.MusicMult;
         VibrationSlider.value = Settings.Instance.VibrationMult;
+    }
+    void ExportToJSON()
+    {
+        var name = PlayerPrefs.GetString("Name", "kamran");
+        var lastScore = PlayerPrefs.GetInt("LastScore", 0);
+        var hScore = PlayerPrefs.GetInt("HighScore", 0);
+        var cRank = LeaderboardSettings.Instance.NumberOfRandomNumbers - LeaderBoardPanel.Instance.PlayerIndex;
+        PlayerData player = new PlayerData(name,lastScore,hScore,cRank);
+        string json = JsonUtility.ToJson(player);
+        string path = Application.persistentDataPath + "/playerData.json";
+        File.WriteAllText(path, json);
+        GameDebug.Log(json);
+    }
+}
+public struct PlayerData
+{
+    public string name;
+    public int lastScore;
+    public int hScore;
+    public int cRank;
+    public float SFXMult;
+    public float MusicMult;
+    public float VibrationMult;
+    public PlayerData(string name,int lastScore,int hScore,int cRank)
+    {
+        this.name = name;
+        this.lastScore = lastScore;
+        this.hScore = hScore;
+        this.cRank = cRank;
+        SFXMult = Settings.Instance.SFXMult;
+        MusicMult = Settings.Instance.MusicMult;
+        VibrationMult = Settings.Instance.VibrationMult;
     }
 }
