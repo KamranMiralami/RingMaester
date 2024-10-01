@@ -11,8 +11,9 @@ namespace RingMaester.Managers
         [Header("Properties")]
         [SerializeField] float scoreBonusCD;
         [SerializeField] int scoreBonusAmount;
-        [SerializeField] float gameSpeedIncreaseRate;
+        [SerializeField] AnimationCurve gameSpeedCurve;
         [SerializeField] float maxGameSpeed;
+        [SerializeField] float maxGameSpeedTime;
         [SerializeField] int targetStreakForBonus;
         public float GameSpeed = 1f;
         [Header("Manager References")]
@@ -23,6 +24,7 @@ namespace RingMaester.Managers
         [Header("References")]
         [SerializeField] TextMeshProUGUI scoreTxt;
         [SerializeField] TextMeshProUGUI bonusTxt;
+        [SerializeField] Image BG;
         [SerializeField] Button pauseBtn;
         [SerializeField] Image pauseImage;
         [HideInInspector]
@@ -36,6 +38,8 @@ namespace RingMaester.Managers
         bool increaseGameSpeed;
         int streak;
         float giveRewardCD = 0.2f;
+        float gameTime;
+        float bgDefaultRed;
         private void Start()
         {
             playerManager.Init();
@@ -44,6 +48,7 @@ namespace RingMaester.Managers
             rewardManager.MakeReward();
             SetScore(0);
             curScoreBonusCD = -1;
+            bgDefaultRed = BG.color.r;
             increaseGameSpeed = true;
             pauseBtn.onClick.RemoveAllListeners();
             pauseBtn.onClick.AddListener(() =>
@@ -82,10 +87,6 @@ namespace RingMaester.Managers
                 amount += scoreBonusAmount;
                 GiveBonus();
             }
-            else
-            {
-                streak = 1;
-            }
             SetScore(Score + amount);
             rewardManager.MakeReward();
             PlayerGotReward?.Invoke();
@@ -104,6 +105,9 @@ namespace RingMaester.Managers
                 bonusTxt.color = new Color(imageColor.r, imageColor.g, imageColor.b, 1f);
                 bonusObj.position += new Vector3(0, .75f, 0);
             });
+            Color bgColor = BG.color;
+            BG.DOComplete();
+            BG.DOColor(new Color(1, bgColor.g, bgColor.b, bgColor.a), 1f);
             PlayerGotBonus?.Invoke();
             GameDebug.Log("Player Got Bonus");
         }
@@ -115,19 +119,35 @@ namespace RingMaester.Managers
         }
         private void Update()
         {
+            if(IsPaused) return;
+            gameTime += Time.deltaTime;
             if (curScoreBonusCD > 0)
             {
                 curScoreBonusCD -= Time.deltaTime;
             }
+            else
+            {
+                LostStreak();
+            }
             if (increaseGameSpeed)
             {
-                GameSpeed += Time.deltaTime * gameSpeedIncreaseRate;
+                var gameSpeedCurveIndex = Mathf.Clamp01(gameTime / maxGameSpeedTime);
+                var increaseSpeed = gameSpeedCurve.Evaluate(gameSpeedCurveIndex);
+                GameSpeed =Mathf.Lerp(1,maxGameSpeed,increaseSpeed);
                 if (GameSpeed >= maxGameSpeed) increaseGameSpeed = false;
             }
             if (giveRewardCD > 0)
             {
                 giveRewardCD -= Time.deltaTime;
             }
+        }
+        void LostStreak()
+        {
+            if (streak <= 0) return;
+            streak = 0;
+            Color bgColor = BG.color;
+            BG.DOComplete();
+            BG.DOColor(new Color(bgDefaultRed, bgColor.g, bgColor.b, bgColor.a), 1f);
         }
         public float GetPlayerAngle() => playerManager.CurAngle;
     }
