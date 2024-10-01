@@ -52,7 +52,10 @@ namespace RingMaester
             ReadRandomStringsFile();
             for (int i = 0; i <visibleItems; i++)
             {
-                var profile = Instantiate(MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, listParent);
+                //var profile = Instantiate(MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, listParent);
+                var profile = Splash.LeaderBoardProfileObjectPool.Get();
+                profile.transform.SetParent(listParent);
+                profile.transform.localScale = Vector3.one;
                 profile.Repaint(randomNumbers[totalItems-i], randomStrings[totalItems - i]);
                 items.Add(profile);
             }

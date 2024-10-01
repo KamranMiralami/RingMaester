@@ -13,6 +13,7 @@ namespace RingMaester.Managers
 
         [Header("References")]
         [SerializeField] PlayerCollisionHandler playerCollisionHandler;
+        [SerializeField] DotTrail dotTrail;
         public float CurAngle
         {
             get
@@ -31,6 +32,7 @@ namespace RingMaester.Managers
             canMove = true;
             canChangePos = true;
             playerCollisionHandler.Init(this);
+            dotTrail.Init();
             base.Init();
         }
         private void Update()
