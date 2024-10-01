@@ -26,10 +26,11 @@ namespace RingMaester
             {
                 CreateKnob();
             }
+            GameManager.Instance.PlayerGotBonus += CreateKnob;
         }
         public void CreateKnob()
         {
-            var knob = Instantiate(GamePrefabHolder.Instance.KnobPrefab, KnobParent);
+            var knob = Instantiate(GameResourceHolder.Instance.KnobPrefab, KnobParent);
             knob.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             var knobAngle = GetRandomKnobAngle();
 
@@ -47,11 +48,13 @@ namespace RingMaester
             {
                 int threshold = 10;
                 if(KnobList.Count>0)
-                    threshold = 360 / KnobList.Count - 20;
+                    threshold = 360 / KnobList.Count - 30;
                 threshold = Mathf.Clamp(threshold, 5, 60);
-                var tmp = KnobList.Where(x => Mathf.Abs(x.CurAngle - random) < threshold);
-                var tmp3 =Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 90;
-                if (!tmp.Any() && !tmp3)
+                var tmp = KnobList.FirstOrDefault(x => Mathf.Abs(x.CurAngle - random) < threshold 
+                    || Mathf.Abs(x.CurAngle + 360 - random) < threshold);
+                var tmp3 =Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 90 
+                    || Mathf.Abs(GameManager.Instance.GetPlayerAngle()+360 - random) < 90;
+                if (tmp == null && !tmp3)
                     break;
                 random = UnityEngine.Random.Range(0, 360);
                 tries++;
@@ -62,6 +65,10 @@ namespace RingMaester
                 }
             }
             return random;
+        }
+        private void OnDestroy()
+        {
+            GameManager.Instance.PlayerGotBonus -= CreateKnob;
         }
     }
 }

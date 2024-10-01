@@ -22,9 +22,11 @@ public abstract class AbstractAttachedToCircle : MonoBehaviour
         protected set;
         get;
     }
+    protected bool isInit;
     public virtual void Init()
     {
         CurPosType = defaultPosType;
+        isInit = true;
     }
     /// <summary>
     /// Changed the current position of player.

@@ -17,7 +17,14 @@ public class Reward : AbstractAttachedToCircle
         get;
         private set;
     }
-
+    public void Pause()
+    {
+        model.transform.DOPause();
+    }
+    public void Resume()
+    {
+        model.transform.DORestart();
+    }
     public override void GetHit(Collider2D other)
     {
         GameManager.Instance.GiveReward(rewardAmount);
@@ -39,10 +46,14 @@ public class Reward : AbstractAttachedToCircle
         model.transform.localScale = Vector3.zero;
         model.transform.DOScale(scale, appearDuration).OnComplete(() =>
         {
-            model.transform.DORotate(new Vector3(0, 0, 360), rotationSpeed, RotateMode.LocalAxisAdd)
-                .SetEase(Ease.Linear)
-                .SetLoops(-1)
-                .SetSpeedBased(true);
+            PlayeAnimation();
         });
+    }
+    void PlayeAnimation()
+    {
+        model.transform.DORotate(new Vector3(0, 0, 360), rotationSpeed, RotateMode.LocalAxisAdd)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1)
+            .SetSpeedBased(true);
     }
 }

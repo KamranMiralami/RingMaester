@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67009c99cb3399e4cae31c8b8f38be3e, type: 3}
-  m_Name: GamePrefabHolder
+  m_Name: GameResourceHolder
   m_EditorClassIdentifier: 
   KnobPrefab: {fileID: 9018665331552927371, guid: f626a183bfdfada4ba02d01dace6eba7, type: 3}
   RewardPrefab: {fileID: 4485487104307652361, guid: 125e3aef92d46954ea2c03e8a0f8c527, type: 3}
+  PauseSprite: {fileID: 21300000, guid: e6101f4e354454f4e9d85f086918a6e0, type: 3}
+  PlaySprite: {fileID: 21300000, guid: c4e59880c531edf46a1b7e609e22c0e3, type: 3}

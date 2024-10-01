@@ -1,6 +1,7 @@
 using DG.Tweening;
 using RingMaester;
 using RingMaester.Managers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,6 @@ public class Knob : AbstractAttachedToCircle
     {
         GameManager.Instance.EndGame();
     }
-
     public void InitKnob(float angle,PosType posType)
     {
         base.Init();
@@ -31,5 +31,18 @@ public class Knob : AbstractAttachedToCircle
         model.transform.DOKill(true);
         model.transform.localScale = Vector3.zero;
         model.transform.DOScale(scale, appearDuration);
+        GameManager.Instance.PlayerGotReward += CheckToggle;
+    }
+
+    private void CheckToggle()
+    {
+        if (!isInit) return;
+        var Rand = UnityEngine.Random.Range(0, 3);
+        if(Rand==0)
+            TogglePosition();
+    }
+    private void OnDestroy()
+    {
+        GameManager.Instance.PlayerGotReward -= CheckToggle;
     }
 }

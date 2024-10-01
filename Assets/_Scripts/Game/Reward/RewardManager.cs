@@ -20,9 +20,23 @@ public class RewardManager : SingletonBehaviour<RewardManager>
             Destroy(t.gameObject);
         }
     }
+    public void PauseRewards()
+    {
+        foreach(var reward in rewardList)
+        {
+            reward.Pause();
+        }
+    }
+    public void ResumeRewards()
+    {
+        foreach (var reward in rewardList)
+        {
+            reward.Resume();
+        }
+    }
     public void MakeReward()
     {
-        var Reward = Instantiate(GamePrefabHolder.Instance.RewardPrefab, RewardParent);
+        var Reward = Instantiate(GameResourceHolder.Instance.RewardPrefab, RewardParent);
         Reward.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         int posT = Enum.GetValues(typeof(PosType)).Length;
@@ -45,10 +59,12 @@ public class RewardManager : SingletonBehaviour<RewardManager>
 
         while (true)
         {
-            var tmp = rewardList.Where(x => Mathf.Abs(x.CurAngle - random) < threshold);
-            var tmp2 = knobList.Where(x => Mathf.Abs(x.CurAngle - random) < threshold && posType== x.CurPosType);
-            var tmp3 = Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 20;
-            if (!tmp.Any() && !tmp2.Any() && !tmp3)
+            var tmp = rewardList.FirstOrDefault(x => Mathf.Abs(x.CurAngle - random) < threshold 
+            || Mathf.Abs(x.CurAngle + 360 - random) < threshold);
+            var tmp2 = knobList.FirstOrDefault(x => Mathf.Abs(x.CurAngle - random) < 20 
+            || Mathf.Abs(x.CurAngle+360 - random) < 20);
+            var tmp3 = Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 60;
+            if (tmp==null && tmp2 == null && !tmp3)
                 break;
             random = UnityEngine.Random.Range(0, 360);
 
@@ -60,6 +76,18 @@ public class RewardManager : SingletonBehaviour<RewardManager>
                 break;
             }
         }
+        //WriteDebug(random,threshold);
         return random;
+    }
+    void WriteDebug(int random,int threshold)
+    {
+        Debug.Log("///////////////");
+        var knobList = KnobManager.Instance.KnobList;
+        foreach (var knob in knobList)
+        {
+            Debug.Log(knob.CurAngle+" "+knob.CurPosType);
+        }
+        Debug.Log("and random/threshold is " + random+" "+threshold);
+        Debug.Log("///////////////");
     }
 }

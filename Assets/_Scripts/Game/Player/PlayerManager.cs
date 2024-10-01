@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 namespace RingMaester.Managers
 {
     public class PlayerManager : AbstractAttachedToCircle
@@ -37,7 +38,7 @@ namespace RingMaester.Managers
             HandleMovement();
             if (canChangePos)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     TogglePosition();
                 }
@@ -47,7 +48,7 @@ namespace RingMaester.Managers
         {
             var mult = isClockWise ? -1 : 1;
             var curRot = transform.localRotation.eulerAngles.z;
-            var newRot = curRot + rotationSpeed * Time.deltaTime * mult;
+            var newRot = curRot + rotationSpeed * Time.deltaTime * mult* GameManager.Instance.GameSpeed;
             CurAngle = newRot;
         }
         public void ChangeMovement(bool val)
@@ -57,7 +58,7 @@ namespace RingMaester.Managers
         }
         public override void GetHit(Collider2D other)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }
