@@ -12,5 +12,8 @@ namespace RingMaester
     {
         public Color DeselectedColor;
         public Color SelectedColor;
+        public Color LeaderboardSelfColor;
+        public Color LeaderboardOthersColor;
+        public LeaderBoardProfile LeaderBoardProfilePrefab;
     }
 }

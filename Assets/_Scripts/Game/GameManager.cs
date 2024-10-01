@@ -11,14 +11,6 @@ namespace RingMaester.Managers
 {
     public class GameManager : SingletonBehaviour<GameManager>
     {
-        [Header("Properties")]
-        [SerializeField] float scoreBonusCD;
-        [SerializeField] int scoreBonusAmount;
-        [SerializeField] AnimationCurve gameSpeedCurve;
-        [SerializeField] float maxGameSpeed;
-        [SerializeField] float maxGameSpeedTime;
-        [SerializeField] int targetStreakForBonus;
-        [SerializeField] float defaultGameSpeed;
         [Header("Manager References")]
         [SerializeField] PlayerManager playerManager;
         [SerializeField] KnobManager knobManager;
@@ -49,14 +41,21 @@ namespace RingMaester.Managers
         float gameTime;
         float bgDefaultRed;
         bool gameEnded;
+        float scoreBonusCD;
+        int scoreBonusAmount;
+        AnimationCurve gameSpeedCurve;
+        float maxGameSpeed;
+        float maxGameSpeedTime;
+        int targetStreakForBonus;
+        float defaultGameSpeed;
         private void Start()
         {
+            GetBalance();
             playerManager.Init();
             knobManager.Init(3);
             rewardManager.Init();
             gameOverScreen.Init();
             QuitGamePanel.Init();
-
             rewardManager.MakeReward();
             SetScore(0);
             curScoreBonusCD = -1;
@@ -70,6 +69,16 @@ namespace RingMaester.Managers
                 if (!IsPaused) PauseGame();
                 else ResumeGame();
             });
+        }
+        void GetBalance()
+        {
+            scoreBonusCD=GameBalance.Instance.ScoreBonusCD;
+            scoreBonusAmount = GameBalance.Instance.ScoreBonusAmount;
+            gameSpeedCurve = GameBalance.Instance.GameSpeedCurve;
+            maxGameSpeed = GameBalance.Instance.MaxGameSpeed;
+            maxGameSpeedTime = GameBalance.Instance.MaxGameSpeedTime;
+            targetStreakForBonus = GameBalance.Instance.TargetStreakForBonus;
+            defaultGameSpeed = GameBalance.Instance.DefaultGameSpeed;
         }
         public async UniTask EndGame()
         {
