@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace Keylid.Footballop
+namespace RingMaester
 {
     [Serializable]
     [CreateAssetMenu(fileName = "GameDebug", menuName = "ScriptableObjects/GameDebug")]
@@ -20,7 +20,7 @@ namespace Keylid.Footballop
             if (CanShowDebug && HasTag(debug))
                 Debug.LogFormat(GetPrefix(debug) + log, args);
         }
-        public static void LogError(string log, DebugEnum debug)
+        public static void LogError(string log, DebugEnum debug=DebugEnum.Custom)
         {
             if (CanShowDebug && HasTag(debug))
                 Debug.LogError(GetPrefix(debug) + log);
@@ -96,7 +96,8 @@ namespace Keylid.Footballop
             Custom = 256,
             StartUp = 512,
             Restful = 1024,
-            UI = 2048
+            UI = 2048,
+            Player = 4096,
         }
     }
 }

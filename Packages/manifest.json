@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "com.benoitfreslon.vibration": "https://github.com/BenoitFreslon/Vibration.git",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.unity.collab-proxy": "2.4.3",
+    "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.ide.rider": "3.0.31",
     "com.unity.ide.visualstudio": "2.0.22",
