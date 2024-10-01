@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67009c99cb3399e4cae31c8b8f38be3e, type: 3}
+  m_Name: GamePrefabHolder
+  m_EditorClassIdentifier: 
+  KnobPrefab: {fileID: 9018665331552927371, guid: f626a183bfdfada4ba02d01dace6eba7, type: 3}
+  RewardPrefab: {fileID: 4485487104307652361, guid: 125e3aef92d46954ea2c03e8a0f8c527, type: 3}
