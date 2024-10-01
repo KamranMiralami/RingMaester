@@ -30,6 +30,7 @@ namespace RingMaester
         [SerializeField] Panel PlayPanel;
         [SerializeField] Panel ShopPanel;
         [SerializeField] Panel SettingsPanel;
+        [SerializeField] Panel QuitGamePanel;
 
         Panel curPanel;
         private void Start()
@@ -45,6 +46,7 @@ namespace RingMaester
             PlayPanel.Init();
             ShopPanel.Init();
             SettingsPanel.Init();
+            QuitGamePanel.Init();
         }
 
         void SetupButtons()
@@ -113,6 +115,13 @@ namespace RingMaester
                 case Panels.Shop: return ShopPanel;
                 case Panels.Leaderboard: return LeaderboardPanel;
                 default: return null;
+            }
+        }
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                QuitGamePanel.Open();
             }
         }
     }

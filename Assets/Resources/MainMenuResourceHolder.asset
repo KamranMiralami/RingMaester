@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeselectedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
   SelectedColor: {r: 1, g: 0.7559525, b: 0, a: 1}
+  LeaderboardSelfColor: {r: 1, g: 0.2971698, b: 0.2971698, a: 1}
+  LeaderboardOthersColor: {r: 1, g: 1, b: 1, a: 1}
+  LeaderBoardProfilePrefab: {fileID: 7357058585557461634, guid: fd425f88f311e5a4bb623c9f9f23f133, type: 3}

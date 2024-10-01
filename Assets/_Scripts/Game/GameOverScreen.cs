@@ -67,5 +67,6 @@ public class GameOverScreen : PanelSystem.Panel
         BGImage.color = BGColor;
         curScoreTxt.text=curScore.ToString();
         highScoreTxt.text=highScore.ToString();
+        PlayerPrefs.SetInt("LastScore",curScore);
     }
 }
