@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ namespace RingMaester
     {
         [Header("References")]
         [SerializeField] Button StartBtn;
+        [SerializeField] TextMeshProUGUI highScoreTxt;
         public override void Init()
         {
         }
@@ -43,6 +45,7 @@ namespace RingMaester
         protected override void OnOpenStarted()
         {
             gameObject.SetActive(true);
+            highScoreTxt.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         }
     }
 }

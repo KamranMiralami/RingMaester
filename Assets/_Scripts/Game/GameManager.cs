@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using PanelSystem;
 using SFXSystem;
 using System;
 using TMPro;
@@ -23,6 +24,7 @@ namespace RingMaester.Managers
         [SerializeField] KnobManager knobManager;
         [SerializeField] RewardManager rewardManager;
         [SerializeField] GameOverScreen gameOverScreen;
+        [SerializeField] QuitGamePanel QuitGamePanel;
 
         [Header("References")]
         [SerializeField] TextMeshProUGUI scoreTxt;
@@ -53,12 +55,15 @@ namespace RingMaester.Managers
             knobManager.Init(3);
             rewardManager.Init();
             gameOverScreen.Init();
+            QuitGamePanel.Init();
+
             rewardManager.MakeReward();
             SetScore(0);
             curScoreBonusCD = -1;
             bgDefaultRed = BG.color.r;
             GameSpeed = defaultGameSpeed;
             increaseGameSpeed = true;
+
             pauseBtn.onClick.RemoveAllListeners();
             pauseBtn.onClick.AddListener(() =>
             {
@@ -78,7 +83,7 @@ namespace RingMaester.Managers
             gameOverScreen.Open();
             gameOverScreen.Repaint(Score,BG.color);
         }
-        void PauseGame()
+        public void PauseGame()
         {
             pauseBtn.transform.DOPunchScale(pauseBtn.transform.localScale * 0.1f, 0.2f);
             pauseImage.sprite = GameResourceHolder.Instance.PlaySprite;
@@ -86,7 +91,7 @@ namespace RingMaester.Managers
             playerManager.ChangeMovement(!IsPaused);
             rewardManager.PauseRewards();
         }
-        void ResumeGame()
+        public void ResumeGame()
         {
             pauseBtn.transform.DOPunchScale(pauseBtn.transform.localScale * 0.1f, 0.2f);
             pauseImage.sprite = GameResourceHolder.Instance.PauseSprite;
@@ -158,6 +163,10 @@ namespace RingMaester.Managers
             if (giveRewardCD > 0)
             {
                 giveRewardCD -= Time.deltaTime;
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                QuitGamePanel.Instance.Open();
             }
         }
         void LostStreak()
