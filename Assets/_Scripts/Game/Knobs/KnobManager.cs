@@ -45,12 +45,12 @@ namespace RingMaester.Managers
             {
                 int threshold = 10;
                 if (KnobList.Count > 0)
-                    threshold = 360 / KnobList.Count - 30;
+                    threshold = 360 / KnobList.Count - 40;
                 threshold = Mathf.Clamp(threshold, 5, 60);
                 var tmp = KnobList.FirstOrDefault(x => Mathf.Abs(x.CurAngle - random) < threshold
                     || Mathf.Abs(x.CurAngle + 360 - random) < threshold);
-                var tmp3 = Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 90
-                    || Mathf.Abs(GameManager.Instance.GetPlayerAngle() + 360 - random) < 90;
+                var tmp3 = Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 45
+                    || Mathf.Abs(GameManager.Instance.GetPlayerAngle() + 360 - random) < 45;
                 if (tmp == null && !tmp3)
                     break;
                 random = UnityEngine.Random.Range(0, 360);

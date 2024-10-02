@@ -549,7 +549,7 @@ MonoBehaviour:
   listParent: {fileID: 842868046}
   scrollRect: {fileID: 1764605435}
   listParentRect: {fileID: 842868046}
-  defaultScrollCD: 1
+  defaultScrollCD: 0.25
 --- !u!224 &135989281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6745,7 +6745,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.01
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 0.5
   m_Viewport: {fileID: 850876760}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1639125879}

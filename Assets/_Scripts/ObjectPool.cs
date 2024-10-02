@@ -43,6 +43,7 @@ public class ObjectPool<T> where T : MonoBehaviour
     public void Release(T obj)
     {
         obj.gameObject.SetActive(false);
+        obj.transform.SetParent(null);
         _pool.Enqueue(obj);
     }
 
