@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InWardYDifference: 0.37
-  transitionDuration: 0.25
+  transitionDuration: 0.1
   defaultPosType: 1
   model: {fileID: 3989562500232415632}
   isClockWise: 0

@@ -5923,7 +5923,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1639125878
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6748,7 +6748,7 @@ MonoBehaviour:
   m_ScrollSensitivity: 0.5
   m_Viewport: {fileID: 850876760}
   m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 1639125879}
+  m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3

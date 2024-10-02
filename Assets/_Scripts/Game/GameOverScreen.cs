@@ -44,8 +44,10 @@ public class GameOverScreen : PanelSystem.Panel
         GoMainMenuBtn.onClick.AddListener(() =>
         {
             GoMainMenuBtn.transform.DOKill(true);
-            GoMainMenuBtn.transform.DOPunchScale(GoMainMenuBtn.transform.localScale * 0.2f, 0.2f);
-            SceneManager.LoadSceneAsync(SceneNames.Instance.MainMenuSceneName);
+            GoMainMenuBtn.transform.DOPunchScale(GoMainMenuBtn.transform.localScale * 0.2f, 0.2f).OnComplete(() =>
+            {
+                SceneManager.LoadSceneAsync(SceneNames.Instance.MainMenuSceneName);
+            });
         });
         ShareBtn.onClick.RemoveAllListeners();
         ShareBtn.onClick.AddListener(() =>
