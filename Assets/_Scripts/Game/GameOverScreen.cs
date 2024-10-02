@@ -12,6 +12,7 @@ public class GameOverScreen : PanelSystem.Panel
 {
     [Header("References")]
     [SerializeField] Button GoMainMenuBtn;
+    [SerializeField] Button RestartBtn;
     [SerializeField] Button ShareBtn;
     [SerializeField] TextMeshProUGUI highScoreTxt;
     [SerializeField] Image BGImage;
@@ -30,6 +31,7 @@ public class GameOverScreen : PanelSystem.Panel
     protected override void OnCloseStarted()
     {
         GoMainMenuBtn.onClick.RemoveAllListeners();
+        RestartBtn.onClick.RemoveAllListeners();
     }
 
     protected override void OnOpenFinished()
@@ -47,6 +49,15 @@ public class GameOverScreen : PanelSystem.Panel
             GoMainMenuBtn.transform.DOPunchScale(GoMainMenuBtn.transform.localScale * 0.2f, 0.2f).OnComplete(() =>
             {
                 SceneManager.LoadSceneAsync(SceneNames.Instance.MainMenuSceneName);
+            });
+        });
+        RestartBtn.onClick.RemoveAllListeners();
+        RestartBtn.onClick.AddListener(() =>
+        {
+            RestartBtn.transform.DOKill(true);
+            RestartBtn.transform.DOPunchScale(GoMainMenuBtn.transform.localScale * 0.2f, 0.2f).OnComplete(() =>
+            {
+                SceneManager.LoadSceneAsync(SceneNames.Instance.GameSceneName);
             });
         });
         ShareBtn.onClick.RemoveAllListeners();
