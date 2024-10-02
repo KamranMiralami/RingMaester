@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using PanelSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -133,6 +135,7 @@ namespace RingMaester
         }
         void Update()
         {
+            Debug.Log(scrollRect.verticalNormalizedPosition);
             currentScrollCD -= Time.deltaTime;
             if (currentScrollCD > 0) return;
             if (scrollRect.verticalNormalizedPosition < 0.1f)
@@ -151,8 +154,8 @@ namespace RingMaester
         {
             if (firstVisibleItemIndex > 0)
             {
-                firstVisibleItemIndex-=10;
-                UpdateItems();
+                firstVisibleItemIndex-= 20;
+                //UpdateItemsDownward();
             }
         }
 
@@ -160,29 +163,70 @@ namespace RingMaester
         {
             if (firstVisibleItemIndex + visibleItems < totalItems)
             {
-                firstVisibleItemIndex+=10;
-                UpdateItems();
+                firstVisibleItemIndex+= 20;
+                //UpdateItemsForward();
             }
         }
 
-        void UpdateItems()
+        async UniTaskVoid UpdateItemsForward()
         {
-            for (int i = 0; i < visibleItems; i++)
+            for (int i = 0; i < 20; i++)
             {
-                int itemIndex = firstVisibleItemIndex + i;
-                if (itemIndex < totalItems)
+                if (firstVisibleItemIndex + visibleItems < totalItems)
                 {
-                    items[i].gameObject.SetActive(true);
-                    RectTransform itemRectTransform = items[i].Rect;
-                    itemRectTransform.anchoredPosition = new Vector2(0, -itemHeight * i);
-                    items[i].Repaint(randomNumbers[totalItems-itemIndex], randomStrings[totalItems-itemIndex]);
+                    var itemIndex = randomNumbers.Count-1 - (firstVisibleItemIndex-10 + visibleItems + i);
+                    var item = items[0];
+                    items[0].Repaint(randomNumbers[itemIndex],
+                        randomStrings[itemIndex]);
+                    items[0].transform.SetParent(null);
+                    await UniTask.Yield();
+                    AddItems(items[0]);
+                    items[0].gameObject.SetActive(true);
+                    items.RemoveAt(0);
+                    items.Add(item);
                 }
                 else
                 {
-                    items[i].gameObject.SetActive(false);
+                    items[0].gameObject.SetActive(false);
                 }
             }
-            listParentRect.sizeDelta = new Vector2(listParentRect.sizeDelta.x, itemHeight * totalItems);
+        }
+        async UniTaskVoid UpdateItemsDownward()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                var itemIndex = randomNumbers.Count-1  - (firstVisibleItemIndex+10) + i;
+                var item = items[items.Count -1];
+                items[items.Count - 1].Repaint(randomNumbers[itemIndex],
+                    randomStrings[itemIndex]);
+                items[items.Count- 1].transform.SetParent(null);
+                await UniTask.Yield();
+                AddItems(items[items.Count - 1],true);
+                items[items.Count - 1].gameObject.SetActive(true);
+                items.RemoveAt(items.Count - 1);
+                items.Insert(0,item);
+            }
+        }
+        public void AddItems(LeaderBoardProfile newItem, bool isFirstChild=false)
+        {
+            float mult = 1;
+            if (isFirstChild) mult = -1;
+            float prevScrollPosition = scrollRect.verticalNormalizedPosition;
+            float prevContentHeight = listParentRect.rect.height;
+            newItem.transform.SetParent(listParent);
+            if (mult<0)
+            {
+                newItem.transform.SetAsFirstSibling();
+            }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(listParentRect);
+            float newContentHeight = listParentRect.rect.height;
+            float heightDifference = newContentHeight - prevContentHeight;
+            if (newContentHeight > scrollRect.viewport.rect.height)
+            {
+                //float newScrollPosition = prevScrollPosition + (heightDifference / newContentHeight)*mult;
+                //newScrollPosition += 0.02f * mult;
+                scrollRect.verticalNormalizedPosition += 0.02215094f * mult;
+            }
         }
     }
 }

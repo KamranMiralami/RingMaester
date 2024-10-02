@@ -54,9 +54,9 @@ namespace RingMaester
         void MakeObjectPool()
         {
             var LeaderBoardProfileObjPool = new ObjectPool<LeaderBoardProfile>
-                (MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, 50, DontDestroyCanvas);
+                (MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, LeaderboardSettings.Instance.NumberOfRandomNumbers, DontDestroyCanvas);
             var DotObjPool = new ObjectPool<Dot>
-                (GameResourceHolder.Instance.DotPrefab, 50, DontDestroyObj);
+                (GameResourceHolder.Instance.DotPrefab, 5, DontDestroyObj);
             DotObjectPool = DotObjPool;
             LeaderBoardProfileObjectPool = LeaderBoardProfileObjPool;
         }
@@ -68,7 +68,7 @@ namespace RingMaester
                 int randomNumber = 0;
                 for (int i = 1; i <= LeaderboardSettings.Instance.NumberOfRandomNumbers-5; i++)
                 {
-                    randomNumber =Mathf.FloorToInt(i / 1000);
+                    randomNumber =Mathf.FloorToInt(LeaderboardSettings.Instance.NumberOfRandomNumbers - 5-i);
                     writer.WriteLine(randomNumber);
                 }
                 randomNumber = 10;

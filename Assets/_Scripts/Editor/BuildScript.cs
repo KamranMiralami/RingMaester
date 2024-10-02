@@ -40,7 +40,7 @@ namespace Keylid.Footballop.Editor
             {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
             }
-            string suffix = " Sadad";
+            string suffix = "";
             suffix += " " + appVersion;
             suffix += ".apk";
             fullBuildPath += suffix;

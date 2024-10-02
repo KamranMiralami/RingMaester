@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f73dd77d4d0ed4c8ec19d7c585cf2c, type: 3}
   m_Name: LeaderboardSettings
   m_EditorClassIdentifier: 
+  NumberOfRandomNumbers: 5000
+  FileNameN: RandomNumbers.txt
+  FileNameS: RandomStrings.txt
+  VisibleNumbers: 50
