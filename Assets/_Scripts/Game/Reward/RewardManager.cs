@@ -62,8 +62,9 @@ namespace RingMaester.Managers
                 var tmp = rewardList.FirstOrDefault(x => Mathf.Abs(x.CurAngle - random) < threshold
                 || Mathf.Abs(x.CurAngle + 360 - random) < threshold);
                 var tmp2 = knobList.FirstOrDefault(x => Mathf.Abs(x.CurAngle - random) < 20
-                || Mathf.Abs(x.CurAngle + 360 - random) < 20);
-                var tmp3 = Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 60;
+                || Mathf.Abs(x.CurAngle + 360 - random) < 20
+                || Mathf.Abs(x.CurAngle - 360 - random) < 20);
+                var tmp3 = Mathf.Abs(GameManager.Instance.GetPlayerAngle() - random) < 45;
                 if (tmp == null && tmp2 == null && !tmp3)
                     break;
                 random = UnityEngine.Random.Range(0, 360);
