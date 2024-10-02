@@ -86,15 +86,17 @@ namespace SFXSystem
     {
         public string ID;
         public AudioClip clip;
+        public bool IsLoop;
         [Range(0,100)]
         public float Volume=50;
         [Range(0, 1)]
         public float PitchRandomness = .5f;
 
-        public void SetData(AudioSource source,float soundMultiplier=1)
+        public void SetData(AudioSource source, float soundMultiplier = 1, bool isLoop = false)
         {
             source.clip = clip;
             source.volume = Volume*soundMultiplier / 100f;
+            IsLoop = isLoop;
         }
         public enum AudioType
         {

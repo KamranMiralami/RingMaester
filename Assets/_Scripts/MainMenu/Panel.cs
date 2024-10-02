@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace PanelSystem
 {
@@ -42,8 +44,9 @@ namespace PanelSystem
             {
                 TweenTransform.DOKill(true);
                 TweenTransform.position =startPos;
-                TweenTransform.DOMove(endPos, duration).OnComplete(() =>
+                TweenTransform.DOMove(endPos, duration).OnComplete(async () =>
                 {
+                    await Task.Yield();
                     OnOpenFinished();
                 });
             }
@@ -74,9 +77,10 @@ namespace PanelSystem
             else
             {
                 TweenTransform.DOKill(true);
-                TweenTransform.DOMove(startPos, duration).OnComplete(() =>
+                TweenTransform.DOMove(startPos, duration).OnComplete(async () =>
                 {
                     TweenTransform.position = endPos;
+                    await Task.Yield();
                     OnCloseFinished();
                 });
             }

@@ -52,8 +52,9 @@ namespace SFXSystem.core
             }
 
             var s = availableSources[0]; 
-            data.SetData(s);
             s.pitch=1+UnityEngine.Random.Range(-data.PitchRandomness,data.PitchRandomness);
+            s.loop = data.IsLoop;
+            data.SetData(s);
             s.PlayOneShot(s.clip, data.Volume / 100 * Settings.Instance.SFXMult);
             availableSources.Remove(s);
             workingSources.Add(new PlayingAudio() { source = s, timer = s.clip.length });
