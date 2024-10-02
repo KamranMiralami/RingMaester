@@ -25,9 +25,9 @@ namespace RingMaester
             while (true)
             {
                 //var Dot = Instantiate(GameResourceHolder.Instance.DotPrefab, transform.position, Quaternion.identity); //TODO : Object pool
-                var Dot=Splash.DotObjectPool.Get();
+                var Dot = Splash.DotObjectPool.Get();
                 Dot.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
-                Dot.transform.localScale = 0.075f*Vector3.one ;
+                Dot.transform.localScale = 0.075f * Vector3.one;
                 var dot = Dot.DotSprite;
                 dots.Enqueue(Dot);
                 FadeDot(dot, dotFadeTime);

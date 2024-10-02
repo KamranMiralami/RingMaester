@@ -82,7 +82,7 @@ namespace RingMaester
         void ReadRandomNumberFile()
         {
             string filePath = Path.Combine(Application.persistentDataPath, fileNameN);
-            var playerHScore = 20;// PlayerPrefs.GetInt("HighScore",0);
+            var playerHScore = PlayerPrefs.GetInt("HighScore",0);
             if (File.Exists(filePath))
             {
                 string[] lines = File.ReadAllLines(filePath);
@@ -136,12 +136,12 @@ namespace RingMaester
         {
             currentScrollCD -= Time.deltaTime;
             if (currentScrollCD > 0) return;
-            if (scrollRect.verticalNormalizedPosition < 0.25f)
+            if (scrollRect.verticalNormalizedPosition < 0.1f)
             {
                 currentScrollCD = defaultScrollCD;
                 LoadMoreItems();
             }
-            else if (scrollRect.verticalNormalizedPosition > 0.75f)
+            else if (scrollRect.verticalNormalizedPosition > 0.9f)
             {
                 currentScrollCD = defaultScrollCD;
                 RemoveExtraItems();

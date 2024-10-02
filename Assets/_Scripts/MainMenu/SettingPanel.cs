@@ -1,5 +1,6 @@
 using DG.Tweening;
 using RingMaester;
+using SFXSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -55,6 +56,7 @@ public class SettingPanel : PanelSystem.Panel
         MusicSlider.onValueChanged.AddListener((value) =>
         {
             Settings.Instance.MusicMult = value;
+            SoundSystemManager.Instance.ChangeBGMVolumn(Settings.Instance.MusicMult);
         });
         VibrationSlider.onValueChanged.RemoveAllListeners();
         VibrationSlider.onValueChanged.AddListener((value) =>
@@ -79,6 +81,7 @@ public class SettingPanel : PanelSystem.Panel
         var lastScore = PlayerPrefs.GetInt("LastScore", 0);
         var hScore = PlayerPrefs.GetInt("HighScore", 0);
         var cRank = LeaderboardSettings.Instance.NumberOfRandomNumbers - LeaderBoardPanel.Instance.PlayerIndex;
+        cRank++;
         PlayerData player = new PlayerData(name,lastScore,hScore,cRank);
         string json = JsonUtility.ToJson(player);
         string path = Application.persistentDataPath + "/playerData.json";

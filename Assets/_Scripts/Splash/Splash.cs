@@ -1,4 +1,5 @@
 using DG.Tweening;
+using SFXSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -21,10 +22,14 @@ namespace RingMaester
         private async void Start()
         {
             Application.targetFrameRate = 120;
+            SoundSystemManager.Instance.Setup();
             LoadingSlider.value = 0f /100f;
             Settings.Instance.SFXMult = PlayerPrefs.GetFloat("SFXMult", 1);
             Settings.Instance.MusicMult = PlayerPrefs.GetFloat("MusicMult", 1);
             Settings.Instance.VibrationMult = PlayerPrefs.GetFloat("VibrationMult", 1);
+            SoundSystemManager.Instance.ChangeBGM("GameBG");
+            SoundSystemManager.Instance.PlayBGM();
+            SoundSystemManager.Instance.ChangeBGMVolumn(Settings.Instance.MusicMult);
             await MoveLoadingBar(20f / 100f);
             if (!PlayerPrefs.HasKey("FirstTime"))
             {
@@ -49,9 +54,9 @@ namespace RingMaester
         void MakeObjectPool()
         {
             var LeaderBoardProfileObjPool = new ObjectPool<LeaderBoardProfile>
-                (MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, 25, DontDestroyCanvas);
+                (MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, 50, DontDestroyCanvas);
             var DotObjPool = new ObjectPool<Dot>
-                (GameResourceHolder.Instance.DotPrefab, 10, DontDestroyObj);
+                (GameResourceHolder.Instance.DotPrefab, 50, DontDestroyObj);
             DotObjectPool = DotObjPool;
             LeaderBoardProfileObjectPool = LeaderBoardProfileObjPool;
         }

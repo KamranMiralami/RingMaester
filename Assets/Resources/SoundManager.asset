@@ -25,4 +25,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a4ed0d17f8eaf8b4ca1ab4745be5bf47, type: 3}
     Volume: 100
     PitchRandomness: 0.05
+  - ID: GameBG
+    clip: {fileID: 8300000, guid: 44c1e4b69b9fc754ca8945112d101d85, type: 3}
+    Volume: 100
+    PitchRandomness: 0
   audioSourceCount: 5
