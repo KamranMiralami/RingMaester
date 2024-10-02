@@ -155,7 +155,7 @@ namespace RingMaester
             if (firstVisibleItemIndex > 0)
             {
                 firstVisibleItemIndex-= 20;
-                //UpdateItemsDownward();
+                UpdateItemsDownward();
             }
         }
 
@@ -164,7 +164,7 @@ namespace RingMaester
             if (firstVisibleItemIndex + visibleItems < totalItems)
             {
                 firstVisibleItemIndex+= 20;
-                //UpdateItemsForward();
+                UpdateItemsForward();
             }
         }
 
