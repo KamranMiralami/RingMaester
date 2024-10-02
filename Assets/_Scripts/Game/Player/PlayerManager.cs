@@ -13,6 +13,7 @@ namespace RingMaester.Managers
 
         [Header("References")]
         [SerializeField] PlayerCollisionHandler playerCollisionHandler;
+        [SerializeField] DotTrail dotTrail;
         public float CurAngle
         {
             get
@@ -31,6 +32,7 @@ namespace RingMaester.Managers
             canMove = true;
             canChangePos = true;
             playerCollisionHandler.Init(this);
+            dotTrail.Init();
             base.Init();
         }
         private void Update()
@@ -39,11 +41,23 @@ namespace RingMaester.Managers
             HandleMovement();
             if (canChangePos)
             {
-                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+                if (Input.GetMouseButtonDown(0) && !IsPointerOverGameObject())
                 {
                     TogglePosition();
                 }
             }
+        }
+        public bool IsPointerOverGameObject()
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return true;
+            if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+                    return true;
+            }
+
+            return false;
         }
         void HandleMovement()
         {
@@ -59,7 +73,7 @@ namespace RingMaester.Managers
         }
         public void Kill()
         {
-            CameraShake.Instance.Shake(0.4f, 0.1f);
+            CameraShake.Instance.Shake(0.5f, 0.15f);
             SoundSystemManager.Instance.PlaySFX("Loose");
             var particle = Instantiate(GameResourceHolder.Instance.PlayerDeathParticle,model.transform.position,Quaternion.identity);
             Destroy(gameObject);

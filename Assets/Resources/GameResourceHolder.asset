@@ -17,3 +17,4 @@ MonoBehaviour:
   PauseSprite: {fileID: 21300000, guid: 61e534ada91c6eb48b91610afe251704, type: 3}
   PlaySprite: {fileID: 21300000, guid: bd186ed8a9614f845b16bcc84a7a4d98, type: 3}
   PlayerDeathParticle: {fileID: 6984411230734274611, guid: a8f1c200fb00b6448a129fd0190647a8, type: 3}
+  DotPrefab: {fileID: 6027145485293079436, guid: a8ce4fb8f86b33746a772e03ff5e7556, type: 3}

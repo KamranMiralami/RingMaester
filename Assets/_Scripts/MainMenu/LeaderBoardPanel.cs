@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 namespace RingMaester
 {
@@ -52,7 +51,10 @@ namespace RingMaester
             ReadRandomStringsFile();
             for (int i = 0; i <visibleItems; i++)
             {
-                var profile = Instantiate(MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, listParent);
+                //var profile = Instantiate(MainMenuResourceHolder.Instance.LeaderBoardProfilePrefab, listParent);
+                var profile = Splash.LeaderBoardProfileObjectPool.Get();
+                profile.transform.SetParent(listParent);
+                profile.transform.localScale = Vector3.one;
                 profile.Repaint(randomNumbers[totalItems-i], randomStrings[totalItems - i]);
                 items.Add(profile);
             }
@@ -79,7 +81,7 @@ namespace RingMaester
         void ReadRandomNumberFile()
         {
             string filePath = Path.Combine(Application.persistentDataPath, fileNameN);
-            var playerHScore = 20;// PlayerPrefs.GetInt("HighScore",0);
+            var playerHScore = PlayerPrefs.GetInt("HighScore",0);
             if (File.Exists(filePath))
             {
                 string[] lines = File.ReadAllLines(filePath);
@@ -133,12 +135,12 @@ namespace RingMaester
         {
             currentScrollCD -= Time.deltaTime;
             if (currentScrollCD > 0) return;
-            if (scrollRect.verticalNormalizedPosition < 0.25f)
+            if (scrollRect.verticalNormalizedPosition < 0.1f)
             {
                 currentScrollCD = defaultScrollCD;
                 LoadMoreItems();
             }
-            else if (scrollRect.verticalNormalizedPosition > 0.75f)
+            else if (scrollRect.verticalNormalizedPosition > 0.9f)
             {
                 currentScrollCD = defaultScrollCD;
                 RemoveExtraItems();

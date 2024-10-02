@@ -20,11 +20,13 @@ namespace RingMaester
         }
         public void Pause()
         {
-            model.transform.DOPause();
+            if(model != null) 
+                model.transform.DOPause();
         }
         public void Resume()
         {
-            model.transform.DORestart();
+            if (model != null)
+                model.transform.DORestart();
         }
         public override void GetHit(Collider2D other)
         {

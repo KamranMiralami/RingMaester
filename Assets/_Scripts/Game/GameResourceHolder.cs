@@ -13,5 +13,6 @@ namespace RingMaester
         public Sprite PauseSprite;
         public Sprite PlaySprite;
         public ParticleSystem PlayerDeathParticle;
+        public Dot DotPrefab;
     }
 }

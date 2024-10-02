@@ -97,9 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0888369e581ccee47a8b51578427b831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotPrefab: {fileID: 8548561793271054873, guid: a8ce4fb8f86b33746a772e03ff5e7556, type: 3}
-  dotSpawnInterval: 0.1
-  dotFadeTime: 1
+  dotSpawnInterval: 0.15
+  dotFadeTime: 0.8
   dotScaleReduceSpeed: 0.05
   maxDots: 3
 --- !u!1 &3989562500232415632
@@ -265,3 +264,4 @@ MonoBehaviour:
   isClockWise: 0
   rotationSpeed: 40
   playerCollisionHandler: {fileID: 2009166391590021960}
+  dotTrail: {fileID: 1838233175832786939}

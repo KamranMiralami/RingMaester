@@ -82,6 +82,7 @@ namespace SFXSystem.core
         }
         public void PlayBGM()
         {
+            CurrentBGM.volume = Settings.Instance.MusicMult;
             CurrentBGM.Play();
         }
 

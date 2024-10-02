@@ -1,3 +1,4 @@
+using DG.Tweening;
 using RingMaester;
 using System;
 using System.Collections;
@@ -42,11 +43,15 @@ public class GameOverScreen : PanelSystem.Panel
         GoMainMenuBtn.onClick.RemoveAllListeners();
         GoMainMenuBtn.onClick.AddListener(() =>
         {
+            GoMainMenuBtn.transform.DOKill(true);
+            GoMainMenuBtn.transform.DOPunchScale(GoMainMenuBtn.transform.localScale * 0.2f, 0.2f);
             SceneManager.LoadSceneAsync(SceneNames.Instance.MainMenuSceneName);
         });
         ShareBtn.onClick.RemoveAllListeners();
         ShareBtn.onClick.AddListener(() =>
         {
+            ShareBtn.transform.DOKill(true);
+            ShareBtn.transform.DOPunchScale(ShareBtn.transform.localScale*0.2f,0.2f);
             AndroidShare.ShareText("Hey guys! I have " + highScoreTxt.text+" Score!");
         });
     }
